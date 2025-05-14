@@ -19,10 +19,7 @@ class CommentChildWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isRTL = Directionality.of(context) == TextDirection.rtl;
     final EdgeInsets padding = EdgeInsets.only(
-        left: isRTL ? 0 : avatarRoot!.width + 8.0,
-        bottom: 8,
-        top: 8,
-        right: isRTL ? avatarRoot!.width + 8.0 : 0);
+        left: isRTL ? 0 : avatarRoot!.width + 8.0, bottom: 8, top: 8, right: isRTL ? avatarRoot!.width + 8.0 : 0);
 
     return CustomPaint(
       painter: _Painter(
@@ -86,14 +83,39 @@ class _Painter extends CustomPainter {
     double rootDx = avatarRoot!.width / 2;
     if (textDirection == TextDirection.rtl) rootDx *= -1;
     path.moveTo(rootDx, 0);
-    path.cubicTo(
-      rootDx,
-      0,
-      rootDx,
-      padding!.top + avatarChild!.height / 2,
-      rootDx * 2,
-      padding!.top + avatarChild!.height / 2,
-    );
+    /// ------ new code ----------
+    // path.cubicTo(
+    //   rootDx,
+    //   0,
+    //   rootDx ,
+    //   padding!.top + avatarChild!.height / 2,
+    //   rootDx * 2,
+    //   padding!.top + avatarChild!.height / 2,
+    // );
+
+
+
+    /// ------ new code ----------
+    const double radius = 10.0;
+    final double midY = padding!.top + avatarChild!.height / 2;
+
+    // Go down to just before the corner
+    path.lineTo(rootDx, midY - radius);
+
+    // Rounded corner: vertical to horizontal
+    path.quadraticBezierTo(
+        rootDx,
+        midY, // control point (the corner pivot)
+        rootDx + radius,
+        midY // end point
+        );
+
+   // Draw horizontal to the final x
+    path.lineTo(rootDx * 2, midY);
+
+
+
+
     canvas.drawPath(path, _paint);
 
     if (!isLast) {

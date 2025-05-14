@@ -95,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Text(
                         'dangngocduc',
-                        style: Theme.of(context).textTheme.caption?.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             fontWeight: FontWeight.w600, color: Colors.black),
                       ),
                       SizedBox(
@@ -103,14 +103,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Text(
                         '${data.content}',
-                        style: Theme.of(context).textTheme.caption?.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             fontWeight: FontWeight.w300, color: Colors.black),
                       ),
                     ],
                   ),
                 ),
                 DefaultTextStyle(
-                  style: Theme.of(context).textTheme.caption!.copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: Colors.grey[700], fontWeight: FontWeight.bold),
                   child: Padding(
                     padding: EdgeInsets.only(top: 4),
@@ -145,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Text(
                         'dangngocduc',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             fontWeight: FontWeight.w600, color: Colors.black),
                       ),
                       SizedBox(
@@ -153,14 +153,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Text(
                         '${data.content}',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             fontWeight: FontWeight.w300, color: Colors.black),
                       ),
                     ],
                   ),
                 ),
                 DefaultTextStyle(
-                  style: Theme.of(context).textTheme.caption!.copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: Colors.grey[700], fontWeight: FontWeight.bold),
                   child: Padding(
                     padding: EdgeInsets.only(top: 4),
