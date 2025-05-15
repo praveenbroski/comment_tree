@@ -50,6 +50,7 @@ class _CommentTreeWidgetState<R, C> extends State<CommentTreeWidget<R, C>> {
           RootCommentWidget(
             avatarRoot,
             widget.contentRoot!(context, widget.root),
+            hasReplies: widget.replies.isNotEmpty,
           ),
           ...widget.replies.map(
             (e) => CommentChildWidget(
