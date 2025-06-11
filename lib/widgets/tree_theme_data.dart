@@ -6,13 +6,16 @@ class TreeThemeData {
 
   final Color lineColor;
   final double lineWidth;
-
-  /// If true, lines between avatars will be curved. If false, lines will be straight.
-  final bool useCurvedLines;
+  final LineType lineType;
 
   const TreeThemeData({
     this.lineColor = Colors.grey,
     this.lineWidth = 2,
-    this.useCurvedLines = true,
+    this.lineType = LineType.CURVED,
   });
+}
+
+enum LineType {
+  STRAIGHT,
+  CURVED,
 }

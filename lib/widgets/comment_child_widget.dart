@@ -33,9 +33,7 @@ class CommentChildWidget extends StatelessWidget {
         avatarChild: avatar!.preferredSize,
         pathColor: context.watch<TreeThemeData>().lineColor,
         strokeWidth: context.watch<TreeThemeData>().lineWidth,
-        lineType: context.watch<TreeThemeData>().useCurvedLines
-            ? LineType.CURVED
-            : LineType.STRAIGHT,
+        lineType: context.watch<TreeThemeData>().lineType,
       ),
       child: Container(
         padding: padding,
@@ -144,9 +142,4 @@ class _Painter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
-}
-
-enum LineType {
-  STRAIGHT,
-  CURVED,
 }
