@@ -19,7 +19,10 @@ class CommentChildWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isRTL = Directionality.of(context) == TextDirection.rtl;
     final EdgeInsets padding = EdgeInsets.only(
-        left: isRTL ? 0 : avatarRoot!.width + 8.0, bottom: 8, top: 8, right: isRTL ? avatarRoot!.width + 8.0 : 0);
+        left: isRTL ? 0 : avatarRoot!.width + 8.0,
+        bottom: 8,
+        top: 8,
+        right: isRTL ? avatarRoot!.width + 8.0 : 0);
 
     return CustomPaint(
       painter: _Painter(
@@ -30,6 +33,9 @@ class CommentChildWidget extends StatelessWidget {
         avatarChild: avatar!.preferredSize,
         pathColor: context.watch<TreeThemeData>().lineColor,
         strokeWidth: context.watch<TreeThemeData>().lineWidth,
+        lineType: context.watch<TreeThemeData>().useCurvedLines
+            ? LineType.CURVED
+            : LineType.STRAIGHT,
       ),
       child: Container(
         padding: padding,
@@ -57,6 +63,7 @@ class _Painter extends CustomPainter {
   Size? avatarChild;
   Color? pathColor;
   double? strokeWidth;
+  LineType lineType;
 
   _Painter({
     required this.isLast,
@@ -66,6 +73,7 @@ class _Painter extends CustomPainter {
     this.avatarChild,
     this.pathColor,
     this.strokeWidth,
+    this.lineType = LineType.CURVED,
   }) {
     _paint = Paint()
       ..color = pathColor!
@@ -83,6 +91,7 @@ class _Painter extends CustomPainter {
     double rootDx = avatarRoot!.width / 2;
     if (textDirection == TextDirection.rtl) rootDx *= -1;
     path.moveTo(rootDx, 0);
+
     /// ------ new code ----------
     // path.cubicTo(
     //   rootDx,
@@ -93,28 +102,32 @@ class _Painter extends CustomPainter {
     //   padding!.top + avatarChild!.height / 2,
     // );
 
-
-
     /// ------ new code ----------
-    const double radius = 10.0;
-    final double midY = padding!.top + avatarChild!.height / 2;
+    if (lineType == LineType.STRAIGHT) {
+      final double midY = padding!.top + avatarChild!.height / 2;
 
-    // Go down to just before the corner
-    path.lineTo(rootDx, midY - radius);
+      path.lineTo(rootDx, midY);
 
-    // Rounded corner: vertical to horizontal
-    path.quadraticBezierTo(
+      // Draw horizontal to the final x
+      path.lineTo(rootDx * 2, midY);
+    } else {
+      const double radius = 10.0;
+      final double midY = padding!.top + avatarChild!.height / 2;
+
+      // Go down to just before the corner
+      path.lineTo(rootDx, midY - radius);
+
+      // Rounded corner: vertical to horizontal
+      path.quadraticBezierTo(
         rootDx,
         midY, // control point (the corner pivot)
         rootDx + radius,
-        midY // end point
-        );
+        midY, // end point
+      );
 
-   // Draw horizontal to the final x
-    path.lineTo(rootDx * 2, midY);
-
-
-
+      // Draw horizontal to the final x
+      path.lineTo(rootDx * 2, midY);
+    }
 
     canvas.drawPath(path, _paint);
 
@@ -131,4 +144,9 @@ class _Painter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
+}
+
+enum LineType {
+  STRAIGHT,
+  CURVED,
 }
